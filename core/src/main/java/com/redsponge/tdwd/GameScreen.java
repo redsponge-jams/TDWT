@@ -1,17 +1,24 @@
 package com.redsponge.tdwd;
 
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.redsponge.redengine.assets.AssetSpecifier;
 import com.redsponge.redengine.screen.AbstractScreen;
 import com.redsponge.redengine.screen.systems.PhysicsSystem;
 import com.redsponge.redengine.screen.systems.RenderSystem;
 import com.redsponge.redengine.utils.GameAccessor;
+import com.redsponge.redengine.utils.Logger;
+
+import java.lang.reflect.Field;
 
 public class GameScreen extends AbstractScreen {
 
     private RenderSystem rs;
     private PhysicsSystem ps;
 
+    private Engine engine;
 
     private int[][] geometry = {
             {0, 0, getScreenWidth() * 3, 10},
@@ -29,6 +36,14 @@ public class GameScreen extends AbstractScreen {
         ps = getEntitySystem(PhysicsSystem.class);
 
         rs.setBackground(Color.GRAY);
+
+        try {
+            Field f = AbstractScreen.class.getDeclaredField("engine");
+            f.setAccessible(true);
+            engine = (Engine) f.get(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         addEntity(new Player(batch, shapeRenderer));
         for (int[] g : geometry) {
@@ -61,6 +76,13 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void reSize(int width, int height) {
         rs.resize(width, height);
+        Logger.log(this, width, height, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        for (Entity entity : engine.getEntities()) {
+            System.out.println(entity);
+            if(entity instanceof Sword) {
+                ((Sword) entity).resize(width, height);
+            }
+        }
     }
 
     @Override
