@@ -14,4 +14,10 @@ public class GameAssets extends AssetSpecifier {
     @Asset("player.png")
     private Texture playerTex;
 
+    @Asset("pixel.png")
+    private Texture pixel;
+
+    @Asset("sword.png")
+    private Texture swordTex;
+
 }
