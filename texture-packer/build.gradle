@@ -1,0 +1,21 @@
+apply plugin: 'application'
+
+mainClassName = 'com.redsponge.tdwd.texturepacker.PackTextures'
+eclipse.project.name = appName + '-texture-packer'
+sourceCompatibility = 8.0
+
+dependencies {
+	implementation project(':core')
+}
+
+jar {
+	archiveFileName = "${appName}-${archiveVersion}.jar"
+	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } } 
+	manifest {
+		attributes 'Main-Class': project.mainClassName
+	}
+}
+
+run {
+	ignoreExitValue = true
+}

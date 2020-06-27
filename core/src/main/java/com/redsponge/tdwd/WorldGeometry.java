@@ -30,11 +30,11 @@ public class WorldGeometry extends ScreenEntity {
         pos.set(x, y);
         size.set(w, h);
         add(new PhysicsComponent(PBodyType.SOLID));
-        render.setColor(Color.BROWN);
+//        render.setColor(Color.BROWN);
     }
 
     @Override
     public void loadAssets() {
-        add(new TextureComponent(assets.get("pixel", Texture.class)));
+//        add(new TextureComponent(assets.getTextureRegion("pixel")));
     }
 }

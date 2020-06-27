@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.redsponge.redengine.EngineGame;
+import com.redsponge.redengine.screen.splashscreen.SplashScreenScreen;
+import com.redsponge.redengine.transitions.Transitions;
 import com.redsponge.redengine.utils.GeneralUtils;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -20,8 +22,6 @@ public class DefenseGame extends EngineGame {
         defaultShader = SpriteBatch.createDefaultShader();
         onlyWhiteShader = GeneralUtils.tryLoadShader(Gdx.files.internal("shaders/onlyWhite.vert"), Gdx.files.internal("shaders/onlyWhite.frag"));
 
-//        batch.setShader(onlyWhiteShader);
-
-        setScreen(new GameScreen(ga));
+        setScreen(new SplashScreenScreen(ga, new GameScreen(ga), Transitions.sineSlide(1, batch, shapeRenderer)));
     }
 }
